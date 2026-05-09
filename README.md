@@ -1,6 +1,6 @@
-# 💡 Microsoft IQ Samples
+# 💡 Work IQ Samples
 
-This repository contains sample projects demonstrating how to use **Microsoft WorkIQ** and related MCP (Model Context Protocol) tools for building intelligent agent solutions with Microsoft 365 Copilot extensibility.
+This repository contains sample projects demonstrating how to use **Work WorkIQ** and related MCP (Model Context Protocol) tools for building intelligent agent solutions with Microsoft 365 Copilot extensibility.
 
 ---
 
