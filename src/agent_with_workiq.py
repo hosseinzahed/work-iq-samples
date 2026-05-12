@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from azure.identity import AzureDeveloperCliCredential
+from azure.identity import AzureDeveloperCliCredential, AzureCliCredential
 from agent_framework import Agent, MCPStdioTool
 from agent_framework.foundry import FoundryChatClient
 from agent_framework.devui import serve
@@ -23,14 +23,14 @@ foundry_client = FoundryChatClient(
 work_iq_mcp_tool = MCPStdioTool(
     name="work-iq-mcp-tool",
     command="npx",
-    args=["-y", "@microsoft/workiq@latest", "mcp"],
+    args= ["-y", "@microsoft/workiq@0.2.8", "mcp"],
     load_prompts=False
 )
 
 # Create an agent that will interact with Microsoft
 # Work IQ capabilities using the FoundryChatClient
 agent = Agent(
-    name="simple-work-iq-agent",
+    name="agent-with-workiq",
     instructions="""
     You're an agent that can interact with 
     Microsoft Work IQ capabilities using the work-iq-mcp-tool.

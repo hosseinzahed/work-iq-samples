@@ -37,7 +37,7 @@ foundry_client = FoundryChatClient(
 work_iq_mcp_tool = MCPStdioTool(
     name="work-iq-mcp-tool",
     command="npx",
-    args=["-y", "@microsoft/workiq@latest", "mcp"],
+    args= ["-y", "@microsoft/workiq@0.2.8", "mcp"],
     load_prompts=False
 )
 

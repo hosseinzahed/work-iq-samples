@@ -6,34 +6,40 @@ from azure.identity import AzureDeveloperCliCredential, AzureCliCredential, get_
 from agent_framework import Agent, MCPStdioTool, MCPStreamableHTTPTool
 from agent_framework.foundry import FoundryChatClient
 from agent_framework.devui import serve
+from agent_framework.observability import configure_otel_providers
 
 # Load environment variables from .env file, overriding existing ones
 load_dotenv(override=True)
+
+configure_otel_providers()
 
 # Initialize the FoundryChatClient with credentials and
 # model information from environment variables
 foundry_client = FoundryChatClient(
     project_endpoint=os.getenv("FOUNDRY_PROJECT_ENDPOINT"),
-    credential=AzureDeveloperCliCredential(),
+    credential=AzureDeveloperCliCredential(
+        tenant_id=f"{os.getenv('AZURE_TENANT_ID')}"),
     model=os.getenv("MODEL_DEPLOYMENT_NAME")
 )
 
 # Define a tool for interacting with Microsoft Work IQ capabilities
 work_iq_mcp = MCPStdioTool(
-    name="work-iq-mcp",
+    name="work-iq-mcp-tool",
     command="npx",
-    args=["-y", "@microsoft/workiq@latest", "mcp"],
+    args=["-y", "@microsoft/workiq@0.2.8", "mcp"],
     load_prompts=False
 )
 
 # Setup authentication for email tool. The credential caches tokens
 # internally and refreshes them automatically when they expire.
-credential = AzureCliCredential(tenant_id=os.getenv("WORK_TENANT_ID"))
+credential = AzureCliCredential(
+    tenant_id=f"{os.getenv('WORK_TENANT_ID')}"
+)
+
 get_agent365_token = get_bearer_token_provider(
     credential,
-    f"https://agent365.svc.cloud.microsoft/agents/tenants/{os.getenv('WORK_TENANT_ID')}/servers/mcp_MailTools/.default"
+    "https://agent365.svc.cloud.microsoft/.default"
 )
-print(get_agent365_token())
 
 def get_email_headers(_kwargs: dict[str, object]) -> dict[str, str]:
     return {"Authorization": f"Bearer {get_agent365_token()}"}
