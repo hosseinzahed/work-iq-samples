@@ -98,14 +98,24 @@ Replace `{tenant-id}` with your actual Microsoft 365 tenant ID.
 
 Follow these steps to clone and run the project:
 
-1. **Clone the repository**
+1. **Login to Azure**
+
+   Authenticate with your Azure account using the Azure CLI:
+
+   ```sh
+   az login
+   ```
+
+   This is required for accessing Azure AI Foundry and other Azure services used by the samples.
+
+3. **Clone the repository**
 
    ```sh
    git clone https://github.com/hosseinzahed/work-iq-samples.git
    cd work-iq-samples
    ```
 
-2. **(Optional) Create and activate a Python virtual environment**
+4. **(Optional) Create and activate a Python virtual environment**
 
    ```sh
    python -m venv .venv
@@ -115,13 +125,13 @@ Follow these steps to clone and run the project:
    source .venv/bin/activate
    ```
 
-3. **Install dependencies**
+5. **Install dependencies**
 
    ```sh
    pip install -r requirements.txt
    ```
 
-4. **Configure environment variables**
+6. **Configure environment variables**
 
    Copy `.sample.env` to `.env` and fill in the required values:
 
@@ -136,21 +146,21 @@ Follow these steps to clone and run the project:
    | `AZURE_TENANT_ID` | Azure AD tenant ID for Foundry authentication |
    | `WORK_TENANT_ID` | Microsoft 365 tenant ID for Mail/Calendar/Teams tools |
 
-5. **Run the WorkIQ agent example**
+7. **Run the WorkIQ agent example**
 
    ```sh
    cd src
    python agent_with_workiq.py
    ```
 
-6. **Run the agent with email tools**
+8. **Run the agent with email tools**
 
    ```sh
    cd src
    python agent_with_email_tools.py
    ```
 
-7. **Run the Chainlit app**
+9. **Run the Chainlit app**
 
    ```sh
    cd src
